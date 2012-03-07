@@ -24,7 +24,6 @@ public class LstInterrogador extends Interrogador {
 	public void execute(int totalInterrogadores, int division, float tagBitrate){
 		tagBitrate *= 1000;
 		int valor = 0;
-		int initRound = 0;
 		for (int interrogatorNumber = 1; interrogatorNumber <= totalInterrogadores; interrogatorNumber++){
 			averageTotalRounds = 0;
 			averageTotalSlots = 0;
@@ -33,7 +32,7 @@ public class LstInterrogador extends Interrogador {
 			averageTotalTime = 0;
 			averageTotalReadTime = 0;
 			for (int average = 1; average <= division; average++) {
-				initRound = this.initRound;
+				int initRound = this.initRound;
 				totalRound = 0;
 				totalSlot = 0;
 				valor = this.etiquetas[interrogatorNumber-1];

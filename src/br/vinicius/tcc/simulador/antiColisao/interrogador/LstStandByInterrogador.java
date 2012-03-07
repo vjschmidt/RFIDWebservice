@@ -32,6 +32,7 @@ public class LstStandByInterrogador extends Interrogador {
 			averageTotalTime = 0;
 			averageTotalReadTime = 0;
 			for (int average = 1; average <= division; average++) {
+				int initRound = this.initRound;
 				totalRound = 0;
 				totalSlot = 0;
 				valor = this.etiquetas[interrogatorNumber - 1];
