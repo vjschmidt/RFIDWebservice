@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(propOrder = {"totalEtiquetas", "protocolo", "totalLeitoras", "totalAntenas", "avancado"})
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Simulacao {
-
+	
 	private int totalEtiquetas;
 	private String protocolo;
 	private int totalLeitoras;

@@ -6,11 +6,11 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlType(propOrder = {"modelo", "antena"})
+@XmlType(propOrder = {"modelo", "posicoes"})
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Antena {
 	private String modelo;
-	private List<Posicao> antena;
+	private List<Posicao> posicoes;
 	
 	public Antena() {
 
@@ -18,7 +18,7 @@ public class Antena {
 
 	public Antena(String modelo, List<Posicao> antena) {
 		this.modelo = modelo;
-		this.antena = antena;
+		this.posicoes = antena;
 	}
 
 	public String getModelo() {
@@ -30,11 +30,11 @@ public class Antena {
 	}
 	
 	public List<Posicao> getAntena() {
-		return antena;
+		return posicoes;
 	}
 	
 	public void setAntena(List<Posicao> antena) {
-		this.antena = antena;
+		this.posicoes = antena;
 	}
 	
 }

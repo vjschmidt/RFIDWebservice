@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlType(propOrder = {"velocidadeDeslocamento", "modeloEtiqueta", "materialEtiquetado", "posicaoInicialEtiqueta", "posicaoFinalEtiqueta", "antenas", "ambiente", "obstaculos"})
@@ -13,8 +14,11 @@ public class DadosAvancados {
 	private float velocidadeDeslocamento;
 	private String modeloEtiqueta;
 	private String materialEtiquetado;
+	@XmlElement(required=true)
 	private Posicao posicaoInicialEtiqueta;
+	@XmlElement(required=true)
 	private Posicao posicaoFinalEtiqueta;
+	@XmlElement(required=true)
 	private Antena antenas;
 	private Ambiente ambiente;
 	private List<Obstaculo> obstaculos;
