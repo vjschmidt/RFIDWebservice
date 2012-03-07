@@ -1,7 +1,12 @@
 package br.vinicius.tcc.simulador.antiColisao;
 
 import br.vinicius.tcc.entidade.Simulacao;
+import br.vinicius.tcc.simulador.antiColisao.interrogador.BtreeInterrogador;
+import br.vinicius.tcc.simulador.antiColisao.interrogador.FstInterrogador;
 import br.vinicius.tcc.simulador.antiColisao.interrogador.LstInterrogador;
+import br.vinicius.tcc.simulador.antiColisao.interrogador.LstStandByInterrogador;
+import br.vinicius.tcc.simulador.antiColisao.interrogador.QCalculatedInterrogador;
+import br.vinicius.tcc.simulador.antiColisao.interrogador.QSlotToSlotInterrogador;
 
 public class ProtocolosAntiColisao {
 	public final String LST = "LST";
@@ -18,18 +23,58 @@ public class ProtocolosAntiColisao {
 			etiquetasDivididas[1] = simulacao.getTotalEtiquetas() - etiquetasDivididas[0];
 		}
 		if(protocolo.equalsIgnoreCase(LST)) {
-			//TODO LstInterrogador
-			//new LstInterrogador(etiquetasDivididas, 16, 10, fieldTest, adjust, tagSpeed, expositionDistance, tagBitrate)
+			LstInterrogador interrogador = new LstInterrogador(etiquetasDivididas, 16, 10, 40f);
+			//TODO temporario
+			System.out.println(interrogador.getAverageTotalRounds() / 10);
+			System.out.println(interrogador.getAverageTotalSlots()  / 10);
+			System.out.println(interrogador.getAverageTotalColision() / 10);
+			System.out.println(interrogador.getAverageTotalEmpty() / 10);
+			System.out.println(interrogador.getAverageTotalTime() / 10);
+			System.out.println(interrogador.getAverageTotalReadTime() / 10);
 		} else if(protocolo.equalsIgnoreCase(LSTSTANDBY)) {
-			//TODO LstStandByInterrogador
+			LstStandByInterrogador interrogador = new LstStandByInterrogador(etiquetasDivididas, 16, 10, 40f);
+			//TODO temporario
+			System.out.println(interrogador.getAverageTotalRounds() / 10);
+			System.out.println(interrogador.getAverageTotalSlots() / 10);
+			System.out.println(interrogador.getAverageTotalColision() / 10);
+			System.out.println(interrogador.getAverageTotalEmpty() / 10);
+			System.out.println(interrogador.getAverageTotalTime() / 10);
+			System.out.println(interrogador.getAverageTotalReadTime() / 10);
 		} else if(protocolo.equalsIgnoreCase(FST)) {
-			//TODO FstInterrogador
+			FstInterrogador interrogador = new FstInterrogador(etiquetasDivididas, 10, 40f);
+			//TODO temporario
+			System.out.println(interrogador.getAverageTotalRounds() / 10);
+			System.out.println(interrogador.getAverageTotalSlots() / 10);
+			System.out.println(interrogador.getAverageTotalColision() / 10);
+			System.out.println(interrogador.getAverageTotalEmpty() / 10);
+			System.out.println(interrogador.getAverageTotalTime() / 10);
+			System.out.println(interrogador.getAverageTotalReadTime() / 10);
 		} else if(protocolo.equalsIgnoreCase(BTREE)) {
-			//TODO BtreeInterrogador
+			BtreeInterrogador interrogador = new BtreeInterrogador(etiquetasDivididas, 10, 40f);
+			//TODO temporario
+			System.out.println(interrogador.getAverageTotalIterations() / 10);
+			System.out.println(interrogador.getAverageTotalColision() / 10);
+			System.out.println(interrogador.getAverageTotalEmpty() / 10);
+			System.out.println(interrogador.getAverageTotalTime() / 10);
+			System.out.println(interrogador.getAverageTotalReadTime() / 10);
 		} else if(protocolo.equalsIgnoreCase(ALOHAQ)) {
-			//TODO QCalclulatedInterrogador
+			QCalculatedInterrogador interrogador = new QCalculatedInterrogador(etiquetasDivididas, 10, 1, 40f, 256);
+			//TODO temporario
+			System.out.println(interrogador.getAverageTotalRounds() / 10);
+			System.out.println(interrogador.getAverageTotalSlots() / 10);
+			System.out.println(interrogador.getAverageTotalColision() / 10);
+			System.out.println(interrogador.getAverageTotalEmpty() / 10);
+			System.out.println(interrogador.getAverageTotalTime() / 10);
+			System.out.println(interrogador.getAverageTotalReadTime() / 10);
 		} else if(protocolo.equalsIgnoreCase(ALOHAQSTS)) {
-			//TODO QSlotToSlotInterrogador
+			QSlotToSlotInterrogador interrogador = new QSlotToSlotInterrogador(etiquetasDivididas, 10, 1, 40f, 256);
+			//TODO temporario
+			System.out.println(interrogador.getAverageTotalRounds() / 10);
+			System.out.println(interrogador.getAverageTotalSlots() / 10);
+			System.out.println(interrogador.getAverageTotalColision() / 10);
+			System.out.println(interrogador.getAverageTotalEmpty() / 10);
+			System.out.println(interrogador.getAverageTotalTime() / 10);
+			System.out.println(interrogador.getAverageTotalReadTime() / 10);
 		}
 	}
 }

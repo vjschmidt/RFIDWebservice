@@ -16,9 +16,9 @@ public class Antena {
 
 	}
 
-	public Antena(String modelo, List<Posicao> antena) {
+	public Antena(String modelo, List<Posicao> posicoes) {
 		this.modelo = modelo;
-		this.posicoes = antena;
+		this.posicoes = posicoes;
 	}
 
 	public String getModelo() {
@@ -29,12 +29,12 @@ public class Antena {
 		this.modelo = modelo;
 	}
 	
-	public List<Posicao> getAntena() {
+	public List<Posicao> getPosicoes() {
 		return posicoes;
 	}
 	
-	public void setAntena(List<Posicao> antena) {
-		this.posicoes = antena;
+	public void setPosicoes(List<Posicao> posicoes) {
+		this.posicoes = posicoes;
 	}
 	
 }
