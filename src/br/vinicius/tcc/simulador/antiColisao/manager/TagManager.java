@@ -1,4 +1,4 @@
-package br.vinicius.tcc.simulador.antiColisao.criadorImpressor;
+package br.vinicius.tcc.simulador.antiColisao.manager;
 
 import br.vinicius.tcc.simulador.antiColisao.ControladorDeEtiquetasDoAmbiente;
 
@@ -29,4 +29,6 @@ public abstract class TagManager {
 	public int tamanho() {
 		return tagRFID.tamanho();
 	}
+	
+	public abstract String verificarSlotEnvio();
 }

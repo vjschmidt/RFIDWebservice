@@ -1,49 +1,47 @@
 package br.vinicius.tcc.simulador.antiColisao.interrogador;
 
-import br.vinicius.tcc.simulador.antiColisao.criadorImpressor.FstTagManager;
+import br.vinicius.tcc.simulador.antiColisao.manager.FstTagManager;
 
-public class FstInterrogador extends Interrogador {
-	private float averageTotalRounds = 0; 
-	private float averageTotalSlots = 0;
+public class FstInterrogador extends AveragesAloha {
 	private int roundSize = 16;
-	private int totalRound = 0;
-	private int totalSlot = 0;
 	
-	public FstInterrogador(int[] etiquetas, int division, float tagBitrate){
+	public FstInterrogador(int[] etiquetas, int division, float tagBitRate){
 		this.etiquetas[0] = etiquetas[0];
 		this.etiquetas[1] = (etiquetas.length == 2 ? etiquetas[1] : 0);
-		int totalInterrogadores = etiquetas[1] == 0 ? 1 : 2;
+		this.tagBitRate = tagBitRate;
+		int totalInterrogadores = (etiquetas[1] == 0 ? 1 : 2);
 		log.info("---------------------|FST|---------------------");
 		log.info("Tags in the environment: " + (this.etiquetas[0] + this.etiquetas[1]));
 		log.info("-------------------------------------------------------");
-		execute (totalInterrogadores, division, tagBitrate);
+		execute (totalInterrogadores, division);
 	}
 	
-	public void execute (int totalInterrogadores, int division, float tagBitrate){
-		tagBitrate *= 1000;
-		int valor = 0;
+	public void execute (int totalInterrogadores, int division) {
+		tagBitRate *= 1000;
+		int initRound = 0;
 		for (int interrogatorNumber = 1; interrogatorNumber <= totalInterrogadores; interrogatorNumber++){
 			averageTotalRounds = 0;
 			averageTotalSlots = 0;
-			averageTotalColision = 0;
+			averageTotalCollision = 0;
 			averageTotalEmpty = 0;
 			averageTotalTime = 0;
 			averageTotalReadTime = 0;
+			tags = this.etiquetas[interrogatorNumber - 1];
 			for (int average = 1; average <= division; average++) {
 				totalRound = 0;
 				totalSlot = 0;
-				int initRound = roundSize;
-				valor = this.etiquetas[interrogatorNumber - 1];
-				FstTagManager tag = new FstTagManager(valor);
+				initRound = roundSize;
+				FstTagManager tag = new FstTagManager(tags);
 				do {
 					totalRound++;
 					log.info("Round #" + totalRound);
 					
 					for (int nextSlot = 1; nextSlot <= initRound; nextSlot++){
 						totalSlot++;
+						tag.setSlot(nextSlot);
 						log.info("Slot: " + nextSlot);
 						log.info("Tags that replied:");
-						log.info(tag.etiqueta(nextSlot));
+						log.info(tag.verificarSlotEnvio());
 						if(tag.getSlotCont() == 1) {
 							if(tag.getVazioCont() > tag.getTagsEncontradas()) {
 								if(initRound == 8) {
@@ -91,54 +89,48 @@ public class FstInterrogador extends Interrogador {
 					}
 					tag.novoRound (initRound);
 				} while (tag.tamanho() > 0);
-				log.info("-------------------------------------------------------\n");
-				printMethod(interrogatorNumber, valor, tag.getTotalColisao(), tag.getTotalVazios(), tagBitrate);
+				log.info("-------------------------------------------------------");
+				printMethod(interrogatorNumber, tag.getTotalColisao(), tag.getTotalVazios());
 				averageTotalRounds += totalRound;
 				averageTotalSlots += totalSlot;
-				averageTotalColision += tag.getTotalColisao();
+				averageTotalCollision += tag.getTotalColisao();
 				averageTotalEmpty += tag.getTotalVazios();
 				averageTotalTime += totalSlot * 0.01;
-				averageTotalReadTime += (64 / tagBitrate) * totalSlot;
+				if (tagBitRate > 0) {
+					averageTotalReadTime += (64 / tagBitRate) * totalSlot;
+				}
 			}
-			printAverage (valor, division, tagBitrate);
+			printAverage (division);
 		}
 	}
 	
-	public void printMethod (int interrogatorNumber, int valor, int totalColisao, int totalVazios, float tagBitrate) {
+	public void printMethod (int interrogatorNumber, int totalColisao, int totalVazios) {
 		log.info("--------------------|Interrogator " + interrogatorNumber + "|-------------------");
 		log.info("Performance report");
-		log.info("Tags: " + valor);
+		log.info("Tags: " + tags);
 		log.info("Rounds: " + totalRound);
 		log.info("Slots needed to all tags reply: " + totalSlot);
 		log.info("Slots with tag collision: " + totalColisao);
 		log.info("Slots with no tag reply: " + totalVazios);
 		log.info("Read Total Time (Worst Case): " + formatter.format(totalSlot * 0.01) + "s");
-		if (tagBitrate > 0) {
-			log.info("Read Total Time (Best Case for selected Bit Rate): " + formatter.format((64 / tagBitrate) * totalSlot) + "s");
+		if (tagBitRate > 0) {
+			log.info("Read Total Time (Best Case for selected Bit Rate): " + formatter.format((64 / tagBitRate) * totalSlot) + "s");
 		}
 		log.info("-------------------------------------------------------");
 	}
 	
-	public void printAverage (int valor, int process, float tagBitrate) {
+	public void printAverage (int process) {
 		log.info("Performance report: average of " + process + " processes");
-		log.info("Tags: " + valor);
+		log.info("Tags: " + tags);
 		log.info("Rounds: " + formatter.format(averageTotalRounds / process));
 		log.info("Slots needed to all tags reply: " + formatter.format(averageTotalSlots / process));
-		log.info("Slots with tag collision: " + formatter.format(averageTotalColision / process));
+		log.info("Slots with tag collision: " + formatter.format(averageTotalCollision / process));
 		log.info("Slots with no tag reply: " + formatter.format(averageTotalEmpty / process));
 		log.info("Read Total Time (Worst Case): " + formatter.format(averageTotalTime / process) + "s");
-		if (tagBitrate > 0) {
+		if (tagBitRate > 0) {
 			log.info("Read Total Time (Best Case for selected Bit Rate): " + formatter.format(averageTotalReadTime / process) + "s");
 		}
 		log.info("----------------------|FST - END|----------------------");
 	}
 
-	public float getAverageTotalRounds() {
-		return averageTotalRounds;
-	}
-
-	public float getAverageTotalSlots() {
-		return averageTotalSlots;
-	}
-	
 }

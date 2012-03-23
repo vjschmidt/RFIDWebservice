@@ -1,16 +1,11 @@
 package br.vinicius.tcc.simulador.antiColisao.tag;
 
 public class Etiqueta {
-	private String serialNumber;
-	private Integer contador;
-	protected String hexCode;
+	protected String serialNumber;
+	protected Integer contador;
 	
 	public String getSerialNumber() {
 		return serialNumber;
-	}
-
-	public void setSerialNumber(String serialNumber) {
-		this.serialNumber = serialNumber;
 	}
 
 	public Integer getContador() {
@@ -20,7 +15,7 @@ public class Etiqueta {
 	public void setContador(Integer contador) {
 		this.contador = contador;
 	}
-
+	
 	public String tagSNCreator (String hexCode) {
 		String hexValue = "";
 		if (hexCode.equals("0000")) {
@@ -58,4 +53,5 @@ public class Etiqueta {
 		}
 		return hexValue;
 	}
+	
 }

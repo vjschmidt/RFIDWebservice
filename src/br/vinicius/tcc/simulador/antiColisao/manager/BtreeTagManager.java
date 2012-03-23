@@ -1,11 +1,11 @@
-package br.vinicius.tcc.simulador.antiColisao.criadorImpressor;
+package br.vinicius.tcc.simulador.antiColisao.manager;
 
 import br.vinicius.tcc.simulador.antiColisao.tag.BtreeEtiqueta;
 
 public class BtreeTagManager extends TagManager {
-	public BtreeTagManager(int valor) {
+	public BtreeTagManager(int total) {
 		BtreeEtiqueta etiqueta;
-		for (int x=0; x<valor; x++) {
+		for (int x = 0; x < total; x++) {
 			etiqueta = new BtreeEtiqueta();
 			tagRFID.addEtiqueta(etiqueta);
 		}    
@@ -14,7 +14,7 @@ public class BtreeTagManager extends TagManager {
 	public void fail() {
 		for (int pos = 0; pos < tagRFID.tamanho(); pos++) {
 			if (tagRFID.getTagPos(pos).equals(0)) {
-				if ((int)Math.random()*(2) == 1) {
+				if ((int)(Math.random()*(2)) == 1) {
 					tagRFID.update(pos, tagRFID.getTagPos(pos).intValue() + 1);
 				}
 			} else {
@@ -29,7 +29,7 @@ public class BtreeTagManager extends TagManager {
 		}
 	}
 	
-	public String etiqueta() {
+	public String verificarSlotEnvio() {
 		returns = "";
 		slotCont = 0;
 		if (tagRFID.tamanho() > 0) {
@@ -51,4 +51,5 @@ public class BtreeTagManager extends TagManager {
 		}
 		return returns;
 	}
+	
 }

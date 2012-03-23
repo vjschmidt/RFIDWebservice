@@ -1,23 +1,17 @@
-package br.vinicius.tcc.simulador.antiColisao.criadorImpressor;
+package br.vinicius.tcc.simulador.antiColisao.manager;
 
 import br.vinicius.tcc.simulador.antiColisao.tag.AlohaEtiqueta;
 
-public class LstTagManager extends TagManager {
-	public LstTagManager(int initRound, int valor) {
+public class LstTagManager extends SlotTimeManager {
+	public LstTagManager(int initRound, int total) {
 		AlohaEtiqueta etiqueta;
-		for (int x = 0; x < valor; x++) {
+		for (int x = 0; x < total; x++) {
 			etiqueta = new AlohaEtiqueta (initRound);
 			tagRFID.addEtiqueta(etiqueta);
 		}    
 	}
 	
-	public void novoRound(int initRound) {
-		for (int x = 0; x < tagRFID.tamanho(); x++) {
-			tagRFID.update (x, 1+(int)(Math.random()*(initRound)));
-		}
-	}
-	
-	public String etiqueta(int slot) {
+	public String verificarSlotEnvio() {
 		returns = "";
 		slotCont = 0;
 		if (tagRFID.tamanho() > 0) {
@@ -43,7 +37,4 @@ public class LstTagManager extends TagManager {
 		return returns;
 	}
 	
-	public String getSUID (String tagUID) {
-		return tagUID.substring(2, 4) + tagUID.substring(8, 16);
-	}
 }
